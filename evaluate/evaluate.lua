@@ -1,8 +1,21 @@
 ---
 --- FUnctions to evaluate the performance of clustering algorithm.
 ---
+py = require 'python'
+adjusted_rand_score = py.import sklearn.metrics.adjusted_rand_score
 
 local evaluate = {}
+
+
+function evaluate.accuracy(labels_gt, labels_pre, N)
+  return adjusted_rand_score(labels_gt, labels_pre)
+end
+
+function evaluate.ARI(labels_gt, labels_pre, N)
+
+  return 0
+end
+
 
 -- > labels_gt, table of ground-truth labels
 -- > labels_pre, table of predicted labels

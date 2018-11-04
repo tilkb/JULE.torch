@@ -456,6 +456,8 @@ function evalPerf()
     --local myFile = hdf5.open('results/label_pre_'..tostring(epoch)..'_'..tostring(i)..'.h5', 'w')
     --myFile:write('label', label_pre_tensor_table[i]:long())
     --myFile:close()
+    print('Accuracy:' , evaluate.accuracy(label_gt_table_table[i], label_pre_table_table[i], label_pre_tensor_table[i]:size(1)))
+    print('ARI:', evaluate.ARI(label_gt_table_table[i], label_pre_table_table[i], label_pre_tensor_table[i]:size(1)))
     print('NMI: ' , evaluate.NMI(label_gt_table_table[i], label_pre_table_table[i], label_pre_tensor_table[i]:size(1)))
   end
 end
