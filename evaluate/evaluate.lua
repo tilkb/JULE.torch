@@ -1,14 +1,13 @@
 ---
 --- FUnctions to evaluate the performance of clustering algorithm.
 ---
-py = require 'python'
-adjusted_rand_score = py.import sklearn.metrics.adjusted_rand_score
+
 
 local evaluate = {}
 
 
 function evaluate.accuracy(labels_gt, labels_pre, N)
-  return adjusted_rand_score(labels_gt, labels_pre)
+  return 0
 end
 
 function evaluate.ARI(labels_gt, labels_pre, N)
@@ -22,6 +21,14 @@ end
 -- > N, total number of samples
 -- < NMI
 function evaluate.NMI(labels_gt, labels_pre, N)
+   file = io.open("gt.txt", "w")
+   file:write(label_gt)
+   file:close()
+   
+   file = io.open("predicted.txt", "w")
+   file:write(label_pre)
+   file:close()
+
    -- compute entropy for labels_gt
    local pr_gt = torch.FloatTensor(#labels_gt, 1):zero()   
    for i = 1, #labels_gt do
