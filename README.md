@@ -1,3 +1,12 @@
+# Reproduced results
+
+|    | MNIST |COIL-20 |
+|----|-------|--------|
+|NMI |0.9347 | 0.9826 |
+|ARI |0.9444 | 0.9357 |
+|Acc |0.9743 | 0.9764 |
+
+
 # Joint Unsupervised Learning (JULE) of Deep Representations and Image Clusters.
 
 ### Overview
