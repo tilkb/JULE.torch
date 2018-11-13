@@ -1,3 +1,33 @@
+function serializeTable(val, name, skipnewlines, depth)
+    skipnewlines = skipnewlines or false
+    depth = depth or 0
+
+    local tmp = string.rep(" ", depth)
+
+    if name then tmp = tmp .. name .. " = " end
+
+    if type(val) == "table" then
+        tmp = tmp .. "{" .. (not skipnewlines and "\n" or "")
+
+        for k, v in pairs(val) do
+            tmp =  tmp .. serializeTable(v, k, skipnewlines, depth + 1) .. "," .. (not skipnewlines and "\n" or "")
+        end
+
+        tmp = tmp .. string.rep(" ", depth) .. "}"
+    elseif type(val) == "number" then
+        tmp = tmp .. tostring(val)
+    elseif type(val) == "string" then
+        tmp = tmp .. string.format("%q", val)
+    elseif type(val) == "boolean" then
+        tmp = tmp .. (val and "true" or "false")
+    else
+        tmp = tmp .. "\"[inserializeable datatype:" .. type(val) .. "]\""
+    end
+
+    return tmp
+end
+
+
 ---
 --- FUnctions to evaluate the performance of clustering algorithm.
 ---
@@ -21,13 +51,14 @@ end
 -- > N, total number of samples
 -- < NMI
 function evaluate.NMI(labels_gt, labels_pre, N)
+   print("SAVE")
    file = io.open("gt.txt", "w")
-   file:write(label_gt)
+   file:write(serializeTable(labels_gt))
    file:close()
-   
-   file = io.open("predicted.txt", "w")
-   file:write(label_pre)
-   file:close()
+
+   file2 = io.open("predicted.txt", "w")
+   file2:write(serializeTable(labels_pre))
+   file2:close()
 
    -- compute entropy for labels_gt
    local pr_gt = torch.FloatTensor(#labels_gt, 1):zero()   
